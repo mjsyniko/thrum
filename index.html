@@ -4,195 +4,244 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THRUM: Colony Civilisation Simulation</title>
+    <link href="https://fonts.cdnfonts.com/css/modern-dos-8x16" rel="stylesheet">
+    
     <style>
-        /* Monotone Grey-Blue Palette */
         :root {
-            --bg-deep: #12151a;      /* Deep midnight charcoal */
-            --bg-panel: #1c2229;     /* Muted blue-grey panel */
-            --text-main: #adb5bd;    /* Soft grey text */
-            --text-bright: #dee2e6;  /* High-readability grey */
-            --accent-steel: #5c7080; /* Steel blue accent */
-            --border: #2d3741;       /* Subtle divider */
+            /* Clean Grey-Blue DOS Palette */
+            --bg-deep: #12151a;      
+            --bg-panel: #1c2229;     
+            --text-main: #adb5bd;    
+            --text-bright: #dee2e6;  
+            --accent-steel: #5c7080; 
+            --border: #2d3741;       
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            line-height: 1.8; 
-            max-width: 850px; 
+            font-family: 'Modern DOS 8x16', monospace; 
+            line-height: 1.3; 
+            max-width: 900px; 
             margin: 0 auto; 
-            padding: 60px 20px; 
+            padding: 40px 24px; 
             background: var(--bg-deep); 
             color: var(--text-main); 
+            font-size: 16px;
+            image-rendering: pixelated;
+            -webkit-font-smoothing: none;
         }
 
+        /* THE DOS HEADER BLOCK */
         header {
-            margin-bottom: 50px;
-            text-align: left;
+            margin-bottom: 40px;
+            border-left: 12px solid var(--accent-steel); 
+            padding: 10px 0 10px 25px;
+            border-bottom: 2px solid var(--border);
         }
 
-        .header-top {
-            font-size: 0.8rem;
+        .title-eyebrow {
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 3px;
             color: var(--accent-steel);
-            margin-bottom: -10px;
-            display: block;
+            margin-bottom: 4px;
+            letter-spacing: 2px;
         }
 
         h1 { 
             color: var(--text-bright); 
-            font-weight: 300;
-            letter-spacing: 8px;
+            font-weight: normal;
+            font-size: 64px;
+            line-height: 1;
             text-transform: uppercase;
-            font-size: 3.5rem;
             margin: 0;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
         }
 
         .tagline { 
-            font-family: 'Courier New', Courier, monospace;
             color: var(--accent-steel); 
-            font-size: 1.1rem;
-            margin-top: 15px;
+            font-size: 18px;
+            margin-top: 10px;
         }
 
-        /* Tabs Styling */
+        /* Title Cursor */
+        .tagline::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+
+        /* DOS TAB BUTTONS */
         .tab-nav {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            margin: 30px 0;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
         .tab-btn {
-            background: none;
+            font-family: 'Modern DOS 8x16', monospace;
+            background: var(--bg-panel);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 8px 20px;
+            padding: 6px 20px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            border-color: var(--accent-steel);
-            color: var(--text-bright);
+            margin-right: 5px;
         }
 
         .tab-btn.active {
             background: var(--accent-steel);
             color: var(--bg-deep);
-            border-color: var(--accent-steel);
-            font-weight: bold;
+            border-color: var(--text-bright);
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
+        /* CONTENT FORMATTING */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2, h3 { 
-            color: var(--text-bright); 
-            font-weight: 300;
-            letter-spacing: 1px;
+        h2 { 
+            background: var(--accent-steel); 
+            color: var(--bg-deep); 
+            display: inline-block; 
+            padding: 4px 12px; 
+            margin-bottom: 20px; 
             text-transform: uppercase;
+            font-size: 18px;
         }
 
-        section { margin-bottom: 40px; }
+        h3 { 
+            color: var(--text-bright); 
+            text-transform: uppercase; 
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: inline-block;
+        }
+
+        p { margin-bottom: 20px; }
 
         .devlog-box { 
             background: var(--bg-panel); 
-            padding: 30px; 
-            border-radius: 4px; 
-            border-left: 4px solid var(--accent-steel);
-            margin: 30px 0; 
+            padding: 20px; 
+            border: 1px solid var(--border);
+            margin: 25px 0; 
         }
 
-        hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
-        strong { color: var(--text-bright); }
-        em { color: var(--accent-steel); }
+        /* Spread-out Image Styling */
+        .wide-img-container {
+            margin: 35px 0;
+            width: 100%;
+        }
+
+        .game-img {
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--border);
+            filter: grayscale(100%) contrast(1.2);
+            background: #000;
+            display: block;
+        }
+
+        .img-label {
+            font-size: 14px;
+            color: var(--accent-steel);
+            margin-top: 8px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--accent-steel);
+            padding-left: 10px;
+        }
+
+        /* Story Evolution Cursor - Placed at end of sections */
+        .evolving-cursor::after {
+            content: '_';
+            display: inline-block;
+            margin-left: 8px;
+            color: var(--text-bright);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        hr { border: 0; border-top: 2px solid var(--border); margin: 30px 0; }
+        strong { color: var(--text-bright); font-weight: normal; }
+        em { color: var(--accent-steel); font-style: normal; }
+
     </style>
 </head>
 <body>
 
     <header>
-        <span class="header-top">Colony Civilisation Simulation</span>
+        <div class="title-eyebrow">Colony Civilisation Simulation</div>
         <h1>THRUM</h1>
         <p class="tagline">// Every action has real consequences.</p>
     </header>
 
     <nav class="tab-nav">
-        <button class="tab-btn active" onclick="showTab('vision')">The Vision</button>
-        <button class="tab-btn" onclick="showTab('clockwork')">The Clockwork</button>
+        <button class="tab-btn active" onclick="showTab('vision')">F1: VISION</button>
+        <button class="tab-btn" onclick="showTab('clockwork')">F2: CLOCKWORK</button>
     </nav>
     
     <div id="vision" class="tab-content active">
         <section>
             <h2>The Soul of the World</h2>
-            <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield. By focusing on the core simulation from the start, they ensured that every action has a real consequence, creating a true sandbox where the world reacts to your choices rather than a script.</p>
+            <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield. By focusing on the core simulation from the start, they ensured that every action has a real consequence.</p>
             
+            <div class="wide-img-container">
+                <img src="img1.jpg" class="game-img">
+                <div class="img-label">REF_IMAGE_01 // CORE_SIM_ESTABLISHMENT</div>
+            </div>
+
             <p>Once this foundation was solid, the world took its shape: a rugged, medieval era etched in ink and shadow. While your journey begins among knights and castles, the simulation is designed to be a vast vessel—built with the potential to eventually welcome other civilizations or strange, ancient races from beyond the mists.</p>
         </section>
 
         <div class="devlog-box">
-            <h3>The Simulation: From Hearth to Legion</h3>
+            <h3>From Hearth to Legion</h3>
             <p>Your saga starts with just <strong>two lone souls</strong> standing upon an untamed region of the planet. From these two pioneers, you will sow the seeds of a colony, nurturing it through the seasons until your banners are carried by massive legions of warriors.</p>
-            <p>The world scales seamlessly with your ambition. You have the freedom to walk beside a single scout on a path of stealth or command a sea of steel through complex formations and tactical maneuvers. Whether you are managing the needs of a single hearth or the logistics of a global army, the simulation remembers every strike, every harvest, and every triumph.</p>
+            <p>The world scales seamlessly with your ambition. You have the freedom to walk beside a single scout on a path of stealth or command a sea of steel through complex formations and tactical maneuvers. The simulation remembers every strike, every harvest, and every triumph.</p>
         </div>
 
         <section>
             <h2>The Legacy</h2>
-            <p>Inspired by <em>Dwarf Fortress</em> and <em>Total War</em>, THRUM features a persistent planet where you lead pioneers to build a civilization. Every unit has a procedural personality and physical weight. The core simulation now handles time, aging, and lineage. Units are born, age, earn experience, and form relationships naturally.</p>
-            
+            <p>Inspired by <em>Dwarf Fortress</em> and <em>Total War</em>, THRUM features a persistent planet where you lead pioneers to build a civilization. Every unit has a procedural personality and physical weight. The core simulation now handles time, aging, and lineage naturally.</p>
             <hr>
-            <p><em>THRUM is more than just a game of numbers; it is a living history waiting for your first move. How will your two pioneers be remembered?</em></p>
+            <p class="evolving-cursor"><em>THRUM is a living history waiting for your first move. How will your two pioneers be remembered?</em></p>
         </section>
     </div>
 
     <div id="clockwork" class="tab-content">
         <section>
             <h2>Operational Report</h2>
-            <p>The clockwork is running. The first post spoke of what THRUM was built to become — a living world that breathes, remembers, and fights back. This is a report on what that world is actually doing right now, beneath the surface, in the parts that don’t make for pretty screenshots.</p>
+            <p>The clockwork is running. This is a report on what that world is actually doing right now, beneath the surface, in the parts that don’t make for pretty screenshots.</p>
+
+            <div class="wide-img-container">
+                <img src="img2.jpg" class="game-img">
+                <div class="img-label">SYS_DATA_02 // LINEAGE_TRACKER_ACTIVE</div>
+            </div>
 
             <div class="devlog-box">
                 <h3>Time & Mortality</h3>
                 <p>Time simulation crawls, pauses, and screams forward. You can watch two generations live and die in the time it takes to read this sentence, then drop back to real time and watch a single fight unfold blow by blow. The day/night cycle governs sleep schedules, stamina, and the quiet before a raid.</p>
-                <p>Every unit is born with a name, ages, earns experience, gains perks, gets promoted, and eventually dies — sometimes in battle, sometimes in bed. They carry hunger, stamina, and morale. They need food. They need sleep. They have opinions about both.</p>
+                <p>Every unit is born with a name, ages, earns experience, gains perks, gets promoted, and eventually dies — sometimes in battle, sometimes in bed. They carry hunger, stamina, and morale.</p>
+            </div>
+
+            <div class="wide-img-container">
+                <img src="img3.jpg" class="game-img">
+                <div class="img-label">SYS_DATA_03 // COMBAT_LOG_RENDERING</div>
             </div>
 
             <h3>The Social Fabric</h3>
-            <p>Units talk to each other. Influence accumulates. Relationships compound into something the simulation didn’t explicitly script. Dynasties form, bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies. The lineage system has already started generating things we didn’t plan. We consider this the point.</p>
+            <p>Units talk to each other. Influence accumulates. Relationships compound into something the simulation didn’t explicitly script. Dynasties form, bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies.</p>
 
             <div class="devlog-box">
                 <h3>Systems Update</h3>
-                <p>Melee and ranged combat are both in. Enemy AI pursues and reacts. Pathfinding works. Factions exist and carry their own grievances. A real skirmish is readable as something happening in the world, not just numbers changing behind a curtain. Buildings can be placed and rendered. What they produce, haul, and supply is the next chapter — that work is underway.</p>
+                <p>Melee and ranged combat are both in. Enemy AI pursues and reacts. Pathfinding works. Factions exist and carry their own grievances. Buildings can be placed and rendered. What they produce, haul, and supply is the next chapter — that work is underway.</p>
             </div>
 
-            <p><em>The world runs whether you are watching or not. What happens next is still being written.</em></p>
+            <p class="evolving-cursor"><em>The world runs whether you are watching or not. What happens next is still being written.</em></p>
         </section>
     </div>
 
     <script>
         function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
