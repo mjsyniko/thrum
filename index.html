@@ -6,12 +6,12 @@
     <title>THRUM: Colony Civilisation Simulation</title>
     <style>
         :root {
-            --bg-deep: #12151a;      /* Deep midnight charcoal */
-            --bg-panel: #1c2229;     /* Muted blue-grey panel */
-            --text-main: #adb5bd;    /* Soft grey text */
-            --text-bright: #dee2e6;  /* High-readability grey */
-            --accent-steel: #5c7080; /* Steel blue accent */
-            --border: #2d3741;       /* Subtle divider */
+            --bg-deep: #12151a;      
+            --bg-panel: #1c2229;     
+            --text-main: #adb5bd;    
+            --text-bright: #dee2e6;  
+            --accent-steel: #5c7080; 
+            --border: #2d3741;       
         }
 
         body { 
@@ -24,7 +24,7 @@
             color: var(--text-main); 
         }
 
-        h1, h2, h3 { 
+        h1, h2, h3, h4 { 
             color: var(--text-bright); 
             font-weight: 300;
             letter-spacing: 1px;
@@ -36,11 +36,11 @@
         .tagline { 
             font-style: italic; 
             color: var(--accent-steel); 
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 20px;
         }
 
-        /* Image Styling */
+        /* Image & Placeholder Styling */
         .game-img {
             width: 100%;
             height: auto;
@@ -52,17 +52,35 @@
             transition: all 0.4s ease;
         }
 
-        .game-img:hover {
-            filter: grayscale(0%) brightness(1) contrast(1);
-            border-color: var(--accent-steel);
+        .placeholder {
+            width: 100%;
+            background: linear-gradient(135deg, #1c2229 25%, #242b33 100%);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-steel);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            margin: 20px 0;
+            height: 150px;
         }
 
-        .devlog { 
+        .devlog-container { 
             background: var(--bg-panel); 
-            padding: 30px; 
+            padding: 40px; 
             border-radius: 4px; 
             border-left: 4px solid var(--accent-steel);
-            margin: 40px 0; 
+            margin: 60px 0; 
+        }
+
+        .devlog-meta {
+            font-size: 0.8rem;
+            color: var(--accent-steel);
+            margin-bottom: 10px;
+            display: block;
         }
 
         p { margin-bottom: 1.5rem; }
@@ -80,30 +98,53 @@
     
     <section>
         <h2>The Soul of the World</h2>
-        <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield. By focusing on the core simulation from the start, they ensured that every action has a real consequence, creating a true sandbox where the world reacts to your choices rather than a script.</p>
+        <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield.</p>
         
         <p>Once this foundation was solid, the world took its shape: a rugged, medieval era etched in ink and shadow. While your journey begins among knights and castles, the simulation is designed to be a vast vessel—built with the potential to eventually welcome other civilizations or strange, ancient races from beyond the mists.</p>
 
         <img src="2.png" alt="Simulation Mechanics" class="game-img">
     </section>
 
-    <div class="devlog">
-        <h3>From Two Souls to Legions</h3>
-        <p>Your saga starts with just <strong>two lone souls</strong> standing upon an untamed region of the planet. From these two pioneers, you will sow the seeds of a colony, nurturing it through the seasons until your banners are carried by massive legions of warriors.</p>
+    <article class="devlog-container">
+        <span class="devlog-meta">LOG_ENTRY #001</span>
+        <h2>THRUM — Devlog #1</h2>
+        <p><strong>The clockwork is running.</strong> The first post spoke of what THRUM was built to become — a living world that breathes, remembers, and fights back. This is a report on what that world is actually doing right now, beneath the surface, in the parts that don’t make for pretty screenshots.</p>
         
-        <p>The world scales seamlessly with your ambition. You have the freedom to walk beside a single scout on a path of stealth or command a sea of steel through complex formations and tactical maneuvers. Whether you are managing the needs of a single hearth or the logistics of a global army, the simulation remembers every strike, every harvest, and every triumph.</p>
+        <h4>Chronology & Life Cycles</h4>
+        <p>Time simulation crawls, pauses, and screams forward. You can watch two generations live and die in the time it takes to read this sentence, then drop back to real time and watch a single fight unfold blow by blow. The day/night cycle governs sleep schedules, stamina, and the quiet before a raid.</p>
+        
+        <div class="placeholder">Visualizing: The Passage of Time</div>
 
-        <img src="3.png" alt="Unit Formations and Combat" class="game-img">
-    </div>
+        <p>Every unit is born with a name, ages, earns experience, gains perks, gets promoted, and eventually dies — sometimes in battle, sometimes in bed. They carry hunger, stamina, and morale. They need food. They need sleep. They have opinions about both.</p>
+
+        <h4>Social Fabric & Lineage</h4>
+        <p>Units talk to each other. Influence accumulates. Relationships compound into something the simulation didn’t explicitly script. Dynasties form, bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies.</p>
+        
+        <div class="placeholder">Visualizing: Family Trees & Influence Maps</div>
+
+        <p>The lineage system has already started generating things we didn’t plan. We consider this the point.</p>
+
+        <h4>Steel & Stone</h4>
+        <p>Melee and ranged combat are both in. Enemy AI pursues and reacts. Pathfinding works. Factions exist and carry their own grievances. A real skirmish is readable as something happening in the world, not just numbers changing behind a curtain.</p>
+        
+        <div class="placeholder">Visualizing: Tactical Formations</div>
+
+        <p>Buildings can be placed and rendered. What they produce, haul, and supply is the next chapter — that work is underway. The world runs whether you are watching or not. What happens next is still being written.</p>
+    </article>
 
     <section>
-        <h2>About the Game</h2>
-        <p>Inspired by <em>Dwarf Fortress</em> and <em>Total War</em>, THRUM features a persistent planet where you lead pioneers to build a civilization. Every unit has a procedural personality and physical weight. The core simulation now handles time, aging, and lineage. Units are born, age, earn experience, and form relationships naturally.</p>
-        
-        <hr>
-        
-        <p><em>THRUM is more than just a game of numbers; it is a living history waiting for your first move. How will your two pioneers be remembered?</em></p>
+        <h3>From Two Souls to Legions</h3>
+        <p>Your saga starts with just <strong>two lone souls</strong> standing upon an untamed region of the planet. From these two pioneers, you will sow the seeds of a colony, nurturing it through the seasons until your banners are carried by massive legions of warriors.</p>
+
+        <img src="3.png" alt="Unit Formations and Combat" class="game-img">
     </section>
+
+    <footer>
+        <hr>
+        <p style="text-align: center; font-size: 0.9rem; color: var(--accent-steel);">
+            <em>How will your two pioneers be remembered?</em>
+        </p>
+    </footer>
 
 </body>
 </html>
