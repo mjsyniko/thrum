@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THRUM: Colony Civilisation Simulation</title>
+    <style>
+        :root {
+            --bg-deep: #12151a;      
+            --bg-panel: #1c2229;     
+            --text-main: #adb5bd;    
+            --text-bright: #dee2e6;  
+            --accent-steel: #5c7080; 
+            --border: #2d3741;       
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            line-height: 1.8; 
+            max-width: 850px; 
+            margin: 0 auto; 
+            padding: 60px 20px; 
+            background: var(--bg-deep); 
+            color: var(--text-main); 
+        }
+
+        h1, h2, h3 { 
+            color: var(--text-bright); 
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 { border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+        .tagline { 
+            font-style: italic; 
+            color: var(--accent-steel); 
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* The Elegant Placeholder Style */
+        .placeholder {
+            width: 100%;
+            background: linear-gradient(135deg, #1c2229 25%, #242b33 100%);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-steel);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Adds a subtle "blueprint" crosshair effect */
+        .placeholder::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(92, 112, 128, 0.1);
+        }
+
+        .hero-img { height: 350px; }
+        .content-img { height: 200px; }
+
+        .devlog { 
+            background: var(--bg-panel); 
+            padding: 30px; 
+            border-radius: 4px; 
+            border-left: 4px solid var(--accent-steel);
+            margin: 40px 0; 
+        }
+
+        p { margin-bottom: 1.5rem; }
+        hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
+        strong { color: var(--text-bright); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>THRUM</h1>
+        <p class="tagline">A 3D colony builder where every action has real consequences.</p>
+        <div class="placeholder hero-img">Visualizing the Frontier</div>
+    </header>
+    
+    <section>
+        <h2>The Soul of the World</h2>
+        <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield.</p>
+        
+        <div class="placeholder content-img">Clockwork Simulation Engine</div>
+
+        <p>By focusing on the core simulation from the start, they ensured that every action has a real consequence, creating a true sandbox where the world reacts to your choices rather than a script.</p>
+    </section>
+
+    <div class="devlog">
+        <h3>The Simulation: From Hearth to Legion</h3>
+        <p>Your saga starts with just <strong>two lone souls</strong> standing upon an untamed region of the planet. From these two pioneers, you will sow the seeds of a colony, nurturing it through the seasons.</p>
+        
+        <div class="placeholder" style="height: 150px;">Unit Lineage & Evolution</div>
+        
+        <p>The world scales seamlessly with your ambition. Whether you are managing the needs of a single hearth or the logistics of a global army, the simulation remembers every strike, every harvest, and every triumph.</p>
+    </div>
+
+    <section>
+        <p><em>THRUM is more than just a game of numbers; it is a living history waiting for your first move. How will your two pioneers be remembered?</em></p>
+    </section>
+
+</body>
+</html>
