@@ -4,147 +4,482 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THRUM: Colony Civilisation Simulation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #12151a;      
-            --bg-panel: #1c2229;     
-            --text-main: #adb5bd;    
-            --text-bright: #dee2e6;  
-            --accent-steel: #5c7080; 
-            --border: #2d3741;       
+            --bg-deep: #0a0c0f;
+            --bg-panel: #0f1318;
+            --bg-card: #111519;
+            --text-main: #7d9aa8;
+            --text-bright: #a8c4d0;
+            --text-dim: #3d5260;
+            --accent: #5a8a9f;
+            --accent-warm: #9a7a4a;
+            --border: #1a2530;
+            --border-light: #243444;
+            --green: #4a8a6a;
         }
 
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            line-height: 1.8; 
-            max-width: 850px; 
-            margin: 0 auto; 
-            padding: 60px 20px; 
-            background: var(--bg-deep); 
-            color: var(--text-main); 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            line-height: 1.75;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-size: 14px;
+            min-height: 100vh;
         }
 
-        h1, h2, h3, h4 { 
-            color: var(--text-bright); 
-            font-weight: 300;
-            letter-spacing: 1px;
+        /* CRT scanline effect */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.04) 2px,
+                rgba(0,0,0,0.04) 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .site-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
+        header {
+            margin-bottom: 56px;
+            border-left: 3px solid var(--accent);
+            padding-left: 24px;
+        }
+
+        .title-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
             text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        h1 { border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .title-eyebrow::before { content: '> '; color: var(--accent); }
 
-        .tagline { 
-            font-style: italic; 
-            color: var(--accent-steel); 
-            font-size: 1.1rem;
+        h1 {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 400;
+            letter-spacing: 14px;
+            color: var(--text-bright);
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 16px;
+            text-shadow: 0 0 40px rgba(90,138,159,0.2);
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .tagline::before { content: '// '; color: var(--text-dim); }
+
+        /* ── Nav Tabs ── */
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .tab-btn {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            margin-bottom: -1px;
+        }
+
+        .tab-btn::before { content: '[ '; }
+        .tab-btn::after  { content: ' ]'; }
+
+        .tab-btn:hover { color: var(--text-main); }
+
+        .tab-btn.active {
+            color: var(--text-bright);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-btn .badge {
+            display: inline-block;
+            background: var(--accent-warm);
+            color: #0a0c0f;
+            font-size: 0.6rem;
+            padding: 1px 5px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        /* ── Tab Panels ── */
+        .tab-panel { display: none; animation: fadeUp 0.3s ease; }
+        .tab-panel.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Typography ── */
+        h2 {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-bright);
             margin-bottom: 20px;
         }
 
-        /* Image & Placeholder Styling */
+        h2::before { content: '## '; color: var(--accent); }
+
+        h3 {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        h3::before { content: '> '; color: var(--text-dim); }
+
+        p {
+            margin-bottom: 1.3rem;
+            color: var(--text-main);
+            font-size: 0.93rem;
+        }
+
+        strong {
+            color: var(--text-bright);
+            font-weight: 400;
+        }
+
+        /* ── Images ── */
         .game-img {
             width: 100%;
             height: auto;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin: 30px 0;
+            border: 1px solid var(--border-light);
+            margin: 28px 0;
             display: block;
-            filter: grayscale(30%) brightness(0.9) contrast(1.1);
-            transition: all 0.4s ease;
+            filter: grayscale(30%) brightness(0.8) contrast(1.15) sepia(10%);
         }
 
         .placeholder {
             width: 100%;
-            background: linear-gradient(135deg, #1c2229 25%, #242b33 100%);
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            height: 130px;
+            background: var(--bg-card);
+            border: 1px dashed var(--border-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-steel);
+            color: var(--text-dim);
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.7rem;
             margin: 20px 0;
-            height: 150px;
         }
 
-        .devlog-container { 
-            background: var(--bg-panel); 
-            padding: 40px; 
-            border-radius: 4px; 
-            border-left: 4px solid var(--accent-steel);
-            margin: 60px 0; 
+        .placeholder::before { content: '[ '; }
+        .placeholder::after  { content: ' ]'; }
+
+        /* ── Status pills ── */
+        .status-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
 
-        .devlog-meta {
-            font-size: 0.8rem;
-            color: var(--accent-steel);
-            margin-bottom: 10px;
+        .status-pill {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border: 1px solid var(--border-light);
+            color: var(--text-dim);
+        }
+
+        .status-pill::before { content: '#'; margin-right: 4px; }
+
+        .status-pill.active {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* ── Feature Grid ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 36px;
+            overflow: hidden;
+        }
+
+        .feature-cell {
+            background: var(--bg-card);
+            padding: 24px 20px;
+        }
+
+        .feature-cell h3 { margin-bottom: 8px; }
+        .feature-cell p  { font-size: 0.87rem; margin-bottom: 0; }
+
+        /* ── Devlog Accordions ── */
+        .devlog-list { display: flex; flex-direction: column; gap: 3px; }
+
+        .devlog-entry {
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .devlog-entry:hover    { border-color: var(--border-light); }
+        .devlog-entry.open     { border-color: var(--accent); }
+
+        .devlog-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px 22px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .devlog-header:hover { background: rgba(90,138,159,0.04); }
+
+        .log-num {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            min-width: 72px;
+        }
+
+        .log-title {
+            flex: 1;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-bright);
+        }
+
+        .log-date {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        .log-chevron {
+            width: 14px;
+            height: 14px;
+            border-right: 1px solid var(--text-dim);
+            border-bottom: 1px solid var(--text-dim);
+            transform: rotate(45deg) translateY(-3px);
+            transition: transform 0.3s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .devlog-entry.open .log-chevron {
+            transform: rotate(-135deg) translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .devlog-body {
+            display: none;
+            padding: 4px 22px 28px;
+            border-top: 1px solid var(--border);
+        }
+
+        .devlog-entry.open .devlog-body {
             display: block;
+            animation: fadeDown 0.28s ease;
         }
 
-        p { margin-bottom: 1.5rem; }
-        hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0; }
-        strong { color: var(--text-bright); }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .devlog-body h3 { margin-top: 26px; margin-bottom: 10px; }
+        .devlog-body p  { font-size: 0.91rem; }
+
+        /* ── Footer ── */
+        footer {
+            margin-top: 70px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+            border-left: 3px solid var(--border);
+            padding-left: 24px;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        footer p::before { content: '> '; color: var(--accent); }
+
+        @media (max-width: 600px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .tab-btn { padding: 10px 12px; font-size: 0.65rem; }
+            .log-date { display: none; }
+        }
     </style>
 </head>
 <body>
 
+<div class="site-wrapper">
+
     <header>
+        <p class="title-eyebrow">Colony Civilisation Simulation</p>
         <h1>THRUM</h1>
         <p class="tagline">A 3D colony builder where every action has real consequences.</p>
-        <img src="1.png" alt="THRUM World View" class="game-img">
     </header>
-    
-    <section>
+
+    <nav class="tab-nav" role="tablist">
+        <button class="tab-btn active" onclick="switchTab('about', this)">About</button>
+        <button class="tab-btn" onclick="switchTab('devlog', this)">Devlog <span class="badge">1</span></button>
+    </nav>
+
+    <!-- ══ ABOUT ══ -->
+    <div id="tab-about" class="tab-panel active">
+
+        <div class="status-row">
+            <span class="status-pill active">In Development</span>
+            <span class="status-pill">Medieval Era</span>
+            <span class="status-pill">Colony Builder</span>
+            <span class="status-pill">Full Simulation</span>
+        </div>
+
+        <img src="1.png" alt="THRUM World View" class="game-img">
+
         <h2>The Soul of the World</h2>
         <p>The architects of <strong>THRUM</strong> built the soul of the world first. Before the first stroke of ink was ever laid, they forged the invisible clockwork that governs how a kingdom breathes, how resources flow, and how iron meets shield.</p>
-        
-        <p>Once this foundation was solid, the world took its shape: a rugged, medieval era etched in ink and shadow. While your journey begins among knights and castles, the simulation is designed to be a vast vessel—built with the potential to eventually welcome other civilizations or strange, ancient races from beyond the mists.</p>
+        <p>Once this foundation was solid, the world took its shape: a rugged, medieval era etched in ink and shadow. While your journey begins among knights and castles, the simulation is designed to be a vast vessel — built with the potential to eventually welcome other civilisations or strange, ancient races from beyond the mists.</p>
 
         <img src="2.png" alt="Simulation Mechanics" class="game-img">
-    </section>
 
-    <article class="devlog-container">
-        <span class="devlog-meta">LOG_ENTRY #001</span>
-        <h2>THRUM — Devlog #1</h2>
-        <p><strong>The clockwork is running.</strong> The first post spoke of what THRUM was built to become — a living world that breathes, remembers, and fights back. This is a report on what that world is actually doing right now, beneath the surface, in the parts that don’t make for pretty screenshots.</p>
-        
-        <h4>Chronology & Life Cycles</h4>
-        <p>Time simulation crawls, pauses, and screams forward. You can watch two generations live and die in the time it takes to read this sentence, then drop back to real time and watch a single fight unfold blow by blow. The day/night cycle governs sleep schedules, stamina, and the quiet before a raid.</p>
-        
-        <div class="placeholder">Visualizing: The Passage of Time</div>
-
-        <p>Every unit is born with a name, ages, earns experience, gains perks, gets promoted, and eventually dies — sometimes in battle, sometimes in bed. They carry hunger, stamina, and morale. They need food. They need sleep. They have opinions about both.</p>
-
-        <h4>Social Fabric & Lineage</h4>
-        <p>Units talk to each other. Influence accumulates. Relationships compound into something the simulation didn’t explicitly script. Dynasties form, bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies.</p>
-        
-        <div class="placeholder">Visualizing: Family Trees & Influence Maps</div>
-
-        <p>The lineage system has already started generating things we didn’t plan. We consider this the point.</p>
-
-        <h4>Steel & Stone</h4>
-        <p>Melee and ranged combat are both in. Enemy AI pursues and reacts. Pathfinding works. Factions exist and carry their own grievances. A real skirmish is readable as something happening in the world, not just numbers changing behind a curtain.</p>
-        
-        <div class="placeholder">Visualizing: Tactical Formations</div>
-
-        <p>Buildings can be placed and rendered. What they produce, haul, and supply is the next chapter — that work is underway. The world runs whether you are watching or not. What happens next is still being written.</p>
-    </article>
-
-    <section>
-        <h3>From Two Souls to Legions</h3>
+        <h2>From Two Souls to Legions</h2>
         <p>Your saga starts with just <strong>two lone souls</strong> standing upon an untamed region of the planet. From these two pioneers, you will sow the seeds of a colony, nurturing it through the seasons until your banners are carried by massive legions of warriors.</p>
 
         <img src="3.png" alt="Unit Formations and Combat" class="game-img">
-    </section>
+
+        <div class="feature-grid">
+            <div class="feature-cell">
+                <h3>Living Units</h3>
+                <p>Every unit is born with a name, ages, gains experience, earns perks, and eventually dies — in battle or in bed. They carry hunger, stamina, and opinions about both.</p>
+            </div>
+            <div class="feature-cell">
+                <h3>Lineage & Dynasty</h3>
+                <p>Influence accumulates. Bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies. Dynasties form without scripting.</p>
+            </div>
+            <div class="feature-cell">
+                <h3>Time Control</h3>
+                <p>Watch generations live and die, then drop back to real time to see a single skirmish unfold blow by blow. The world runs whether you are watching or not.</p>
+            </div>
+            <div class="feature-cell">
+                <h3>Real Combat</h3>
+                <p>Melee and ranged. Enemy AI pursues and reacts. Factions carry their own grievances. A skirmish reads as something truly happening in the world.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ DEVLOG ══ -->
+    <div id="tab-devlog" class="tab-panel">
+
+        <h2>Development Logs</h2>
+        <p style="margin-bottom: 36px; font-size: 0.8rem; color: var(--text-dim);">// Reports from the build — what's running, what's breaking, what surprised us.</p>
+
+        <div class="devlog-list">
+
+            <div class="devlog-entry open" id="log-001">
+                <div class="devlog-header" onclick="toggleLog('log-001')">
+                    <span class="log-num">LOG_001</span>
+                    <span class="log-title">The Clockwork is Running</span>
+                    <span class="log-date">First Entry</span>
+                    <span class="log-chevron"></span>
+                </div>
+                <div class="devlog-body">
+                    <p>The first post spoke of what THRUM was built to become — a living world that breathes, remembers, and fights back. This is a report on what that world is actually doing right now, beneath the surface, in the parts that don't make for pretty screenshots.</p>
+
+                    <h3>Chronology & Life Cycles</h3>
+                    <p>Time simulation crawls, pauses, and screams forward. You can watch two generations live and die in the time it takes to read this sentence, then drop back to real time and watch a single fight unfold blow by blow. The day/night cycle governs sleep schedules, stamina, and the quiet before a raid.</p>
+
+                    <div class="placeholder">Visualizing: The Passage of Time</div>
+
+                    <p>Every unit is born with a name, ages, earns experience, gains perks, gets promoted, and eventually dies — sometimes in battle, sometimes in bed. They carry hunger, stamina, and morale. They need food. They need sleep. They have opinions about both.</p>
+
+                    <h3>Social Fabric & Lineage</h3>
+                    <p>Units talk to each other. Influence accumulates. Relationships compound into something the simulation didn't explicitly script. Dynasties form, bloodlines branch, surnames pass to children, and groups fracture when the wrong person dies.</p>
+
+                    <div class="placeholder">Visualizing: Family Trees & Influence Maps</div>
+
+                    <p>The lineage system has already started generating things we didn't plan. We consider this the point.</p>
+
+                    <h3>Steel & Stone</h3>
+                    <p>Melee and ranged combat are both in. Enemy AI pursues and reacts. Pathfinding works. Factions exist and carry their own grievances. A real skirmish is readable as something happening in the world, not just numbers changing behind a curtain.</p>
+
+                    <div class="placeholder">Visualizing: Tactical Formations</div>
+
+                    <p>Buildings can be placed and rendered. What they produce, haul, and supply is the next chapter — that work is underway. The world runs whether you are watching or not. What happens next is still being written.</p>
+                </div>
+            </div>
+
+            <div class="devlog-entry" style="opacity: 0.3; pointer-events: none;">
+                <div class="devlog-header">
+                    <span class="log-num">LOG_002</span>
+                    <span class="log-title">Pending...</span>
+                    <span class="log-date">—</span>
+                    <span class="log-chevron"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <footer>
-        <hr>
-        <p style="text-align: center; font-size: 0.9rem; color: var(--accent-steel);">
-            <em>How will your two pioneers be remembered?</em>
-        </p>
+        <p>How will your two pioneers be remembered?</p>
     </footer>
+
+</div>
+
+<script>
+    function switchTab(name, btn) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + name).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function toggleLog(id) {
+        document.getElementById(id).classList.toggle('open');
+    }
+</script>
 
 </body>
 </html>
