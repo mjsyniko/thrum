@@ -25,20 +25,36 @@
             color: var(--text-main); 
         }
 
-        h1, h2, h3 { 
-            color: var(--text-bright); 
-            font-weight: 300;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        header {
+            margin-bottom: 50px;
+            text-align: left;
         }
 
-        h1 { border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 10px; }
+        .header-top {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-steel);
+            margin-bottom: -10px;
+            display: block;
+        }
+
+        h1 { 
+            color: var(--text-bright); 
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-size: 3.5rem;
+            margin: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
 
         .tagline { 
-            font-style: italic; 
+            font-family: 'Courier New', Courier, monospace;
             color: var(--accent-steel); 
             font-size: 1.1rem;
-            margin-bottom: 40px;
+            margin-top: 15px;
         }
 
         /* Tabs Styling */
@@ -88,6 +104,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        h2, h3 { 
+            color: var(--text-bright); 
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         section { margin-bottom: 40px; }
 
         .devlog-box { 
@@ -106,8 +129,9 @@
 <body>
 
     <header>
+        <span class="header-top">Colony Civilisation Simulation</span>
         <h1>THRUM</h1>
-        <p class="tagline">A 3D colony builder where every action has real consequences.</p>
+        <p class="tagline">// Every action has real consequences.</p>
     </header>
 
     <nav class="tab-nav">
@@ -163,15 +187,12 @@
 
     <script>
         function showTab(tabId) {
-            // Hide all contents
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            // Deactivate all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            // Show selected content and activate button
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
